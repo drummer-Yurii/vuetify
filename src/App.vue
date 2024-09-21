@@ -17,7 +17,9 @@ import { RouterLink, RouterView } from 'vue-router'
       </v-btn>
     </v-toolbar>
     <v-main>
-      <RouterView />
+      <v-container fluid>
+        <RouterView />
+      </v-container>
     </v-main>
   </v-app>
 </template>
