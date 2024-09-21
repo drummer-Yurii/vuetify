@@ -14,12 +14,15 @@ const submit = () => {
   setTimeout(() => {
     isLoading.value = false
     alert(JSON.stringify(form.value))
-  }, 3000)
+  }, 2000)
 }
 </script>
 
 <template>
   <v-container fluid>
+    <v-overlay :model-value="isLoading" class="align-center justify-center">
+      <v-progress-circular v-if="isLoading" indeterminate color="white"></v-progress-circular>
+    </v-overlay>
     <v-row justify="center">
       <v-col cols="4">
         <v-card class="pa-4">
@@ -47,12 +50,7 @@ const submit = () => {
                 hide-details
               ></v-checkbox>
               <v-btn color="red-darken-1" class="mt-2" type="submit" block>
-                <v-progress-circular
-                  v-if="isLoading"
-                  indeterminate
-                  color="white"
-                ></v-progress-circular>
-                <span v-else>Submit</span>
+                Submit
               </v-btn>
             </v-form>
           </v-card-item>
