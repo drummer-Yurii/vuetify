@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useTheme } from 'vuetify'
 
 const items = ref([
   {
@@ -34,6 +35,14 @@ const items = ref([
     color: 'orange'
   }
 ])
+
+const darkTheme = ref(true)
+const theme = useTheme()
+
+const changeTheme = () => {
+  darkTheme.value = !darkTheme.value
+  theme.global.name.value = darkTheme.value ? 'dark' : 'light'
+}
 </script>
 
 <template>
@@ -46,6 +55,9 @@ const items = ref([
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+      <v-btn icon @click="changeTheme">
+        <v-icon :icon="darkTheme ? 'mdi-weather-night' : 'mdi-weather-sunny'"></v-icon>
+      </v-btn>
       <v-menu transition="scale-transition">
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props">
@@ -63,8 +75,7 @@ const items = ref([
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn to="/login" variant="outlined" size="small" color="pink-darken-4" text="Login">
-      </v-btn>
+      <v-btn to="/login" variant="outlined" size="small" text="Login"> </v-btn>
     </v-toolbar>
     <v-main>
       <v-fade-transition>
@@ -73,3 +84,5 @@ const items = ref([
     </v-main>
   </v-app>
 </template>
+
+function useTheme() { throw new Error('Function not implemented.') }
