@@ -10,11 +10,23 @@ const form = ref({
 const isLoading = ref(false)
 
 const submit = () => {
+  if (form.value.email === '') {
+    return
+  }
   isLoading.value = true
   setTimeout(() => {
     isLoading.value = false
     alert(JSON.stringify(form.value))
   }, 2000)
+}
+
+const rules = {
+  required: (value: any) => !!value || 'Required.',
+  email: (value: any) => {
+    const pattern =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return pattern.test(value) || 'Invalid e-mail.'
+  }
 }
 </script>
 
@@ -31,6 +43,7 @@ const submit = () => {
             <v-form @submit.prevent="submit">
               <v-text-field
                 type="email"
+                :rules="[rules.required]"
                 variant="solo"
                 prepend-inner-icon="mdi-email"
                 v-model="form.email"
@@ -38,6 +51,7 @@ const submit = () => {
               ></v-text-field>
               <v-text-field
                 type="password"
+                :rules="[rules.required]"
                 variant="solo"
                 prepend-inner-icon="mdi-key"
                 v-model="form.password"
@@ -49,9 +63,7 @@ const submit = () => {
                 label="Remember Me"
                 hide-details
               ></v-checkbox>
-              <v-btn color="red-darken-1" class="mt-2" type="submit" block>
-                Submit
-              </v-btn>
+              <v-btn color="red-darken-1" class="mt-2" type="submit" block> Submit </v-btn>
             </v-form>
           </v-card-item>
           <v-card-action>
